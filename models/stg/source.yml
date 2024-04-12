@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: staging
+    database: mq_uni_demo  
+    schema: staging  
+    tables:
+      - name: unit
+      - name: course
+      - name: student_course_admission
+      - name: student_unit_enrolment
+      - name: student

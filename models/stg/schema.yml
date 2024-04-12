@@ -1,0 +1,71 @@
+
+version: 2
+
+models:
+  - name: course_stg
+    description: "course stg"
+    columns:
+      - name: course_id
+        description: primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: course_code
+        description: course code
+      - name: course_title
+        description: course title
+
+  - name: student_course_admission_stg
+    description: "student course admission stg"
+    columns:
+      - name: student_course_admission_id
+        description: primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: student_id
+        description:  foreign key to student_stg
+      - name: course_id
+        description: foreign key to course_stg
+      - name: course_admission_status
+        description: "{{ doc('StatusCourseAdmission') }}"
+      - name: status_effective_date
+        description: status effective date
+      - name: admission_year
+        description: admission year
+
+  - name: student_stg
+    description: "student stg"
+    columns:
+      - name: student_id
+        description: primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description:  student first name
+      - name: last_name
+        description: student last name
+      - name: email
+        description: email
+
+  - name: student_unit_enrolment_stg
+    description: "student unit enrolment stg"
+    columns:
+      - name: student_unit_enrolment_id
+        description: primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: student_course_admission_id
+        description: foreign key to student_course_admission_stg
+      - name: unit_id
+        description: foreign key to unit_stg
+      - name: enrolment_date
+        description: enrolment date
+      - name: enrolment_status
+        description: "{{ doc('StatusEnrolment') }}"
+      - name: fee_amount
+        description: fee amount
+      - name: unit_mark
+        description: unit mark
