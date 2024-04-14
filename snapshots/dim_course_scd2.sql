@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='demo',
-        unique_key='course_key',
+        unique_key='course_id',
         strategy='timestamp',
         updated_at='load_timestamp'
     )
@@ -11,7 +11,8 @@
 }}
 
     select 
-        course_id AS course_key,
+        {{ generate_surrogate_key(['course_id','load_timestamp']) }} as course_key,
+        course_id AS course_id,
         course_code AS course_code, 
         course_title AS course_title,
         load_timestamp AS load_timestamp
