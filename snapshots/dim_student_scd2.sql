@@ -3,13 +3,21 @@
 {{
     config(
         target_schema='demo',
-        unique_key='student_id',
+        unique_key='student_key',
         strategy='timestamp',
         updated_at='load_timestamp'
     )
 
 }}
 
-SELECT * from processing.student_stg_scd2
+    select 
+        student_id AS student_key,
+        first_name AS first_name, 
+        last_name AS last_name,
+        email AS email,
+        load_timestamp AS load_timestamp
+    from 
+        {{ source('processing', 'student_stg_scd2') }}
+
 
 {% endsnapshot %}

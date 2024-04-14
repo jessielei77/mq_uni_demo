@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: processing
+    database: mq_uni_demo  
+    schema: processing  
+    tables:
+      - name: unit_stg_scd2
+      - name: course_stg_scd2
+      - name: student_course_admission_stg_scd2
+      - name: student_unit_enrolment_stg_scd2
+      - name: student_stg_scd2
