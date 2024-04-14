@@ -1,0 +1,110 @@
+
+version: 2
+
+models:
+  - name: dim_course_scd2
+    description: "course dimension"
+    columns:
+      - name: course_key
+        description: course key
+        tests:
+          - unique
+          - not_null
+      - name: course_id
+        description: course id, foreign key in fact table
+      - name: course_code
+        description: course code
+      - name: course_title
+        description: course title
+
+  - name: dim_student_scd2
+    description: "student dimension"
+    columns:
+      - name: student_key
+        description:  student key
+        tests:
+          - unique
+          - not_null
+      - name: student_id
+        description:  student id, foreign key in fact table   
+      - name: first_name
+        description: first name
+      - name: last_name
+        description: last name
+      - name: email
+        description: email
+
+  - name: dim_unit_scd2
+    description: "unit dimension"
+    columns:
+      - name: unit_key
+        description:  unit key
+        tests:
+          - unique
+          - not_null
+      - name: unit_id
+        description: unit id, foreign key in fact table   
+      - name: unit_code
+        description: unit code
+      - name: unit_title
+        description: unit title
+      - name: unit_credit_point
+        description: unit credit point
+
+  - name: fact_student_unit_enrolment_scd2
+    description: "student unit enrolment fact table"
+    columns:
+      - name: student_unit_enrolment_key
+        description: Primary key of the table
+        tests:
+          - unique
+          - not_null
+      - name: unit_id
+        description: foreign key for unit
+        tests:
+          - relationships:
+              to: ref('dim_unit_scd2')
+              field: unit_id
+      - name: course_id
+        description: foreign key for course
+        test:
+          - relationships:
+              to: ref('dim_course_scd2')
+              field: course_id
+      - name: student_id
+        description: foreign key for student
+        test:
+          - relationships:
+              to: ref('dim_student_scd2')
+              field: student_id
+      - name: course_admission_id
+        description: foreign key for course admission
+        test:
+          - relationships:
+              to: ref('dim_course_admission_scd2')
+              field: course_admission_id
+      - name: enrolment_date_key
+        description: foreign key for date
+        test:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: enrolment_status
+        description: "{{ doc('StatusEnrolment') }}"
+      - name: fee_amount
+        description: fee amount
+
+  - name: dim_course_admission_scd2
+    description: "course admission dimension"
+    columns:
+      - name: course_admission_key
+        description: course admission key
+        tests:
+          - unique
+          - not_null
+      - name: course_admission_id
+        description: course admission id, foreign key in fact table   
+      - name: course_admission_status
+        description: "{{ doc('StatusCourseAdmission') }}"
+      - name: status_effective_date_key
+        description: status effective date key
