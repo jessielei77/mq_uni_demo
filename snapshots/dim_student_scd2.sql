@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='demo',
-        unique_key='student_key',
+        unique_key='student_id',
         strategy='timestamp',
         updated_at='load_timestamp'
     )
@@ -11,7 +11,8 @@
 }}
 
     select 
-        student_id AS student_key,
+        {{ generate_surrogate_key(['student_id','load_timestamp']) }} as student_key,
+        student_id AS student_id,
         first_name AS first_name, 
         last_name AS last_name,
         email AS email,
