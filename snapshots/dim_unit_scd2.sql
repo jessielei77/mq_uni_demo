@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='demo',
-        unique_key='unit_key',
+        unique_key='unit_id',
         strategy='timestamp',
         updated_at='load_timestamp'
     )
@@ -11,7 +11,8 @@
 }}
 
     select 
-        unit_id AS unit_key,
+        {{ generate_surrogate_key(['unit_id','load_timestamp']) }} as unit_key,
+        unit_id AS unit_id,
         unit_code AS unit_code, 
         unit_title AS unit_title,
         unit_credit_point AS unit_credit_point,
